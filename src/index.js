@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const jtw = require('jsonwebtoken');
 const expressValidator = require('express-validator');
 
 //Configuración de Variables de Entorno
@@ -32,9 +33,15 @@ app.use(express.urlencoded({
 const rutaAuth = require('./routes/auth');
 app.use('/api/users', rutaAuth);
 
+//Ruta de Posts
+const rutaPost = require('./routes/posts');
+app.use('/api/posts', rutaPost);
+
 app.use('/',
     (req, res) => {
-        res.send('Hola')
+        res.status(401).send({
+            'err': 'error de ruta'
+        })
     }
 )
 
